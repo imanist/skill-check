@@ -1,5 +1,9 @@
 package q002;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * Q002 並べ替える
  *
@@ -45,5 +49,23 @@ public class Q002 {
             "14,林",
             "9,清水"
     };
+
+    public static void main(String[] args) {
+        Map<Integer, String> dataMap = new HashMap<Integer, String>();
+        for (String list : dataList) {
+            int key = Integer.parseInt(list.split(",", 0)[0]);
+            String value = list.split(",", 0)[1];
+            dataMap.put(key, value);
+
+        }
+        int sum = dataList.length;
+        Map<Integer, String> treeMap = new TreeMap<Integer, String>(dataMap);
+        //for (int index = 0; index < sum; index ++) {
+        //    System.out.println(treeMap.);
+        //}
+        for (Integer key : treeMap.keySet()) {
+            System.out.println(key+","+treeMap.get(key));
+        }
+    }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: xx時間 10分

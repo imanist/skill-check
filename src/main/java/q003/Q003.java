@@ -1,6 +1,16 @@
 package q003;
 
+import org.apache.commons.lang3.StringUtils;
+import sun.security.util.IOUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Q003 集計と並べ替え
@@ -33,5 +43,42 @@ public class Q003 {
     private static InputStream openDataFile() {
         return Q003.class.getResourceAsStream("data.txt");
     }
+
+    public static void main(String[] args) {
+        InputStream inputStream = openDataFile();
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+                sb.append(" ");
+            }
+            String[] str = sb.toString().split(" ");
+            // 単語とカウントを持ったマップを用意
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            int count = 0;
+            String replaceStr = ",.:";
+            for (String s : str) {
+                String str1 = StringUtils.strip(s, replaceStr);
+                if (!str1.equals("I")) {
+                    str1 = str1.toLowerCase();
+                }
+
+                if (map.containsKey(str1)) {
+                    count = map.get(str1) + 1;
+                } else {
+                    count = 1;
+                }
+                map.put(str1, count);
+            }
+
+            for (String key : map.keySet()) {
+                System.out.printf("%s=%d%n", key, map.get(key));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
+    }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: 20分
